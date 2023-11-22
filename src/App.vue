@@ -1,73 +1,50 @@
 
 <template>
   <div id="app">
-    <nav class="navbar" role="navigation" aria-label="main navigation">
-      <div class="navbar-brand">
-        <a class="navbar-item" href="https://bulma.io">
-          <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
-        </a>
-
-        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-        </a>
+    <div class="navbar bg-base-100">
+      <div class="flex-1">
+        <a class="btn btn-ghost text-xl">daisyUI</a>
       </div>
-
-      <div id="navbarBasicExample" class="navbar-menu">
-        <div class="navbar-start">
-          <a class="navbar-item">
-            Home
-          </a>
-
-          <a class="navbar-item">
-            Documentation
-          </a>
-
-          <div class="navbar-item has-dropdown is-hoverable">
-            <a class="navbar-link">
-              More
-            </a>
-
-            <div class="navbar-dropdown">
-              <a class="navbar-item">
-                About
-              </a>
-              <a class="navbar-item">
-                Jobs
-              </a>
-              <a class="navbar-item">
-                Contact
-              </a>
-              <hr class="navbar-divider">
-              <a class="navbar-item">
-                Report an issue
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <div class="navbar-end">
-          <div class="navbar-item">
-            <div class="buttons">
-              <a class="button is-primary">
-                <strong>Sign up</strong>
-              </a>
-              <a class="button is-light">
-                Log in
-              </a>
-            </div>
-          </div>
-        </div>
+      <div class="flex-none">
+        <ul class="menu menu-horizontal px-1">
+          <li v-if="isLoggedIn" >
+            <button @click="logout" class="px-4 py-2 bg-red-500 text-white">Log out</button>
+          </li>
+          <li v-else>
+            <button @click="redirect" class="px-4 py-2 bg-green-500 text-white">Log in</button>
+          </li>
+        </ul>
       </div>
-    </nav>
+    </div>
   </div>
 
   <RouterView />
 </template>
 
 <script>
+import qs from 'qs'
 import { RouterLink, RouterView } from 'vue-router'
 // import HelloWorld from './components/HelloWorld.vue'
-
+export default{
+  computed: {
+    isLoggedIn: () => false
+  },
+  created(){
+    console.log("sd", import.meta.env)
+  },
+  methods: {
+    redirect(){
+      const queryString = {
+        client_id: import.meta.env.VITE_APP_OAUTH_CLIENT_ID,
+        redirect_uri: import.meta.env.VITE_APP_OAUTH_CLIENT_REDIRECT,
+        response_type: 'code',
+        scope: '' 
+      }
+      window.location.href = `${import.meta.env.VITE_APP_OAUTH_AUTH_SERVER}/oauth/authorize?${qs.stringify(queryString)}`
+    },
+    logout(){
+      // 
+    }
+  }
+}
 </script>
