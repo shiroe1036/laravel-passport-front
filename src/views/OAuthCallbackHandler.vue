@@ -21,9 +21,10 @@ export default{
         redirect_uri: import.meta.env.VITE_APP_OAUTH_CLIENT_REDIRECT,
         code: this.$route.query.code
       }
+      this.$store.commit('accessToken', response.data.access_token);
       const response = await axios.post(`${server_auth_url}/oauth/token`, data_post)
       window.localStorage.setItem('accessToken', response.data.access_token);
-      window.localStorage.setItem('refresh_token', response.data.refresh_token);
+      window.localStorage.setItem('refreshToken', response.data.refresh_token);
 
       this.$router.push('/')
     } catch (error) {

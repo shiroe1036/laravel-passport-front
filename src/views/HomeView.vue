@@ -22,7 +22,9 @@ export default {
     }
   },
   computed: {
-    isLoggedIn: () => false
-  }
+    isLoggedIn() {
+      return this.$store.getters.isLoggedIn
+    }
+  },
 }
 </script>

@@ -2,13 +2,18 @@ import { createStore } from "vuex";
 
 export const store = createStore({
     state(){
-        return {
-            count: 0
-        }
+      return {
+        accessToken: window.localStorage.getItem('accessToken')
+      }
+    },
+    getters: {
+      isLoggedIn(state){
+        return !!state.accessToken;
+      }
     },
     mutations: {
-        increment(state){
-            state.count++
-        }
+      setToken(state, token){
+        state.accessToken = token
+      }
     }
 })

@@ -27,10 +27,12 @@ import { RouterLink, RouterView } from 'vue-router'
 // import HelloWorld from './components/HelloWorld.vue'
 export default{
   computed: {
-    isLoggedIn: () => false
+    isLoggedIn() {
+      return this.$store.getters.isLoggedIn
+    }
   },
   created(){
-    console.log("sd", import.meta.env)
+    console.log("sd", import.meta.env, this.$store.getters.isLoggedIn)
   },
   methods: {
     redirect(){
